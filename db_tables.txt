@@ -1,0 +1,67 @@
+PRODUCT
+  - Product Code (PK)
+  - Product Name
+  - Product Type (FK -> PRODUCT_TYPE)
+
+PRODUCT_TYPE
+  - Type Code (PK)
+  - Type Name
+
+CLIENT
+  - Client Code (PK)  
+  - First Name
+  - Last Name
+  - Address
+  - Phone Number
+  - Credit Amount
+
+SUPPLIER 
+  - Supplier Code (PK)
+  - Name
+  - Address
+  - Phone Number
+
+PURCHASE_ORDER
+  - Order Number (PK)
+  - Order Date
+  - Supplier (FK -> SUPPLIER)
+
+PURCHASE_ORDER_DETAIL
+  - Order Number (PK, FK -> PURCHASE_ORDER)
+  - Product (PK, FK -> PRODUCT)
+  - Quantity
+
+INVOICE
+  - Invoice Number (PK)
+  - Invoice Date
+  - Supplier (FK -> SUPPLIER)
+
+INVOICE_DETAIL  
+  - Invoice Number (PK, FK -> INVOICE)
+  - Product (PK, FK -> PRODUCT)
+  - Purchase Quantity
+  - Purchase Unit Price
+  - Sale Unit Price
+
+STOCK
+  - Product (PK, FK -> PRODUCT)
+  - Quantity
+
+STOCK_MOVEMENT
+  - Movement Number (PK)
+  - Movement Date
+  - Movement Type (IN/OUT)
+  - Reason
+  - Product (FK -> PRODUCT)
+  - Quantity
+
+SALE
+  - Sale Number (PK)
+  - Sale Date 
+  - Client (FK -> CLIENT)
+
+SALE_DETAIL
+  - Sale Number (PK, FK -> SALE)
+  - Product (PK, FK -> PRODUCT)
+  - Quantity
+  - Unit Price
