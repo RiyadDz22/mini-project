@@ -15,16 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Delete purchase order
-if (isset($_GET['delete_purchase_order'])) {
-    deletePurchaseOrder($conn, $_GET['delete_purchase_order']);
-}
-
-// Delete invoice
-if (isset($_GET['delete_invoice'])) {
-    deleteInvoice($conn, $_GET['delete_invoice']);
-}
-
 // Get all purchase orders, invoices, suppliers, and products
 $purchase_orders = getPurchaseOrders($conn);
 $invoices = getInvoices($conn);
@@ -48,7 +38,7 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
 
         <!-- Purchase Order Form -->
         <h2>Create Purchase Order</h2>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form method="post" action="">
             <div class="form-group">
                 <label for="order_date">Order Date</label>
                 <input type="date" class="form-control" id="order_date" name="order_date" required>
@@ -79,7 +69,7 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-secondary" id="add_product_row">Add Product</button>
+            <a href="index.php?page=products" class="btn btn-secondary">Add Product</a>
             <button type="submit" class="btn btn-primary" name="add_purchase_order">Create Purchase Order</button>
         </form>
 
@@ -104,7 +94,6 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
                         <td><?php echo $purchase_order['Supplier_Name']; ?></td>
                         <td>
                             <a href="view_purchase_order.php?id=<?php echo $purchase_order['Order_Number']; ?>" class="btn btn-sm btn-primary">View</a>
-                            <a href="purchases.php?delete_purchase_order=<?php echo $purchase_order['Order_Number']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this purchase order?')">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -115,7 +104,7 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
 
         <!-- Invoice Form -->
         <h2>Create Invoice</h2>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form method="post" action="">
             <div class="form-group">
                 <label for="invoice_date">Invoice Date</label>
                 <input type="date" class="form-control" id="invoice_date" name="invoice_date" required>
@@ -201,7 +190,6 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
                         </td>
                         <td>
                             <a href="view_invoice.php?id=<?php echo $invoice['Invoice_Number']; ?>" class="btn btn-sm btn-primary">View</a>
-                            <a href="purchases.php?delete_invoice=<?php echo $invoice['Invoice_Number']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this invoice?')">Delete</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

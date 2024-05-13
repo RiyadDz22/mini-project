@@ -49,8 +49,9 @@ function addClient($conn, $data)
 function updateClient($conn, $data)
 {
     $stmt = $conn->prepare("UPDATE CLIENT SET First_Name = ?, Last_Name = ?, Address = ?, Phone_Number = ?, Credit_Amount = ? WHERE Client_Code = ?");
-    return $stmt->execute([$data['first_name'], $data['last_name'], $data['address'], $data['phone'], $data['credit_amount'], $data['client_id']]);
+    return $stmt->execute([$data['first_name'], $data['last_name'], $data['address'], $data['phone'], $data['credit_amount'], $data['client_code']]);
 }
+
 
 /**
  * Delete a client from the database
@@ -116,8 +117,9 @@ function addProduct($conn, $data)
 function updateProduct($conn, $data)
 {
     $stmt = $conn->prepare("UPDATE PRODUCT SET Product_Name = ?, Type_Code = ? WHERE Product_Code = ?");
-    return $stmt->execute([$data['product_name'], $data['product_type'], $data['product_id']]);
+    return $stmt->execute([$data['product_name'], $data['product_type'], $data['product_code']]);
 }
+
 
 /**
  * Delete a product from the database

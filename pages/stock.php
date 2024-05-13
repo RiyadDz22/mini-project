@@ -32,7 +32,7 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
 
         <!-- Stock Adjustment Form -->
         <h2>Adjust Stock</h2>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form method="post" action="">
             <div class="form-group">
                 <label for="product_id">Product</label>
                 <select class="form-control" id="product_id" name="product_id" required>

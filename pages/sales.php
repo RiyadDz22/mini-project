@@ -8,13 +8,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Add sale
     if (isset($_POST['add_sale'])) {
         addSale($conn, $_POST);
+    }elseif (isset($_POST['delete_sale'])) { // corrected variable name here
+        $id = $_POST['delete_sale'];
+        $query = "DELETE FROM sale WHERE Sale_Number = :id";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        if ($stmt->execute()) {
+            // Redirect to prevent form resubmission
+            header("Location: {$_SERVER['PHP_SELF']}");
+            exit();
+        } else {
+            echo "Something went wrong. Please try again later.";
+        }
     }
 }
 
-// Delete sale
-if (isset($_GET['delete'])) {
-    deleteSale($conn, $_GET['delete']);
-}
+
 
 // Get all sales, clients, and products
 $sales = getSales($conn);
@@ -39,7 +48,7 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
 
         <!-- Sale Form -->
         <h2>Create Sale</h2>
-        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form method="post" action="">
             <div class="form-group">
                 <label for="sale_date">Sale Date</label>
                 <input type="date" class="form-control" id="sale_date" name="sale_date" required>
@@ -112,9 +121,9 @@ $products = $conn->query("SELECT * FROM PRODUCT")->fetchAll();
                             ?>
                         </td>
                         <td>
-                            <a href="sale_details.php?id=<?php echo $sale['Sale_Number']; ?>" class="btn btn-primary btn-sm">Details</a>
-                            <a href="?delete=<?php echo $sale['Sale_Number']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this sale?')">Delete</a>
-                        </td>
+                        <form method="post" action="">
+                        <a href="sale_details.php?id=<?php echo $sale['Sale_Number']; ?>" class="btn btn-primary btn-sm">Details</a>
+                            </form>                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
